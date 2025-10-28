@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Architecture from "./pages/Architecture";
 import DataFlow from "./pages/DataFlow";
+import ConceptualFramework from "./pages/ConceptualFramework";
 import Dashboard from "./pages/Dashboard";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
@@ -18,14 +19,15 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/architecture" element={<Architecture />} />
-          <Route path="/dataflow" element={<DataFlow />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/about" element={<About />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/architecture" element={<Architecture />} />
+            <Route path="/dataflow" element={<DataFlow />} />
+            <Route path="/framework" element={<ConceptualFramework />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/about" element={<About />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
