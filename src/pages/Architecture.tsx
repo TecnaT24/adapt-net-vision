@@ -7,68 +7,68 @@ const Architecture = () => {
   const layers = [
     {
       icon: Database,
-      title: "Data Collection Layer",
+      title: "Data Collection & Preprocessing Layer",
       color: "primary",
       components: [
-        "Network Devices (Routers, Switches, Access Points)",
-        "Performance Metrics (Bandwidth, Latency, Packet Loss)",
-        "SNMP Logs & IoT Sensor Data",
-        "System Event Monitoring",
-        "Real-time Telemetry Collection"
+        "SNMP Protocol Integration",
+        "NetFlow Data Capture",
+        "Device Telemetry & Logs",
+        "Real-time Data Normalization",
+        "Historical Data Storage"
       ],
-      description: "Foundation layer capturing comprehensive network performance data from all infrastructure components."
+      description: "Captures raw network data from multiple sources including SNMP, NetFlow, system logs, and device telemetry at Adrian Kenya Limited."
     },
     {
       icon: Cpu,
-      title: "AI Processing Layer",
+      title: "Machine Learning Layer",
       color: "secondary",
       components: [
-        "Machine Learning Engine",
-        "Predictive Analytics Module",
-        "Reinforcement Learning Models",
-        "Decision-Tree Optimization Algorithms",
-        "Pattern Recognition System"
+        "Traffic Prediction Models",
+        "Anomaly Detection Algorithms",
+        "Pattern Recognition Engine",
+        "Neural Network Training",
+        "Inference & Forecasting System"
       ],
-      description: "Core intelligence layer processing data through advanced ML models to generate actionable insights."
+      description: "Applies ML algorithms to predict traffic patterns, detect anomalies, and forecast network behavior using historical and real-time data."
     },
     {
       icon: Network,
-      title: "Network Control Layer",
+      title: "Fuzzy Logic Layer",
       color: "accent",
       components: [
-        "Automated Response System",
-        "Dynamic Routing Controller",
-        "Bandwidth Allocation Manager",
-        "SDN Controller Integration",
-        "Load Balancing Orchestrator"
+        "Fuzzy Rule Interpretation",
+        "ML Result Processing",
+        "Network State Fuzification",
+        "Linguistic Variable Mapping",
+        "Uncertainty Handling System"
       ],
-      description: "Execution layer implementing AI-driven optimization decisions across the network infrastructure."
+      description: "Interprets ML predictions using fuzzy logic rules to handle uncertainty and translate numerical outputs into actionable network states."
     },
     {
       icon: Monitor,
-      title: "Visualization & Monitoring Layer",
+      title: "Expert System Layer",
       color: "warning",
       components: [
-        "Interactive Network Topology Map",
-        "Real-time KPI Dashboard",
-        "Predictive Alert System",
-        "Performance Analytics Reports",
-        "Decision Intelligence Interface"
+        "If-Then Rule Engine",
+        "Automated Decision Making",
+        "Escalation Protocols",
+        "Configuration Recommendations",
+        "Action Priority Management"
       ],
-      description: "User-facing layer providing intuitive visualization and monitoring of network status and AI recommendations."
+      description: "Applies expert knowledge through rule-based system to determine optimal actions, trigger automated responses, and manage escalation procedures."
     },
     {
       icon: RefreshCw,
-      title: "Feedback & Learning Loop",
+      title: "Network Control & Feedback Loop",
       color: "destructive",
       components: [
-        "Continuous Data Feedback Pipeline",
-        "Model Refinement Engine",
-        "Self-Learning Mechanism",
-        "Performance Validation System",
-        "Accuracy Improvement Tracker"
+        "Policy Application System",
+        "Traffic Rerouting Controller",
+        "QoS Configuration Manager",
+        "Performance Monitoring",
+        "Model Refinement Pipeline"
       ],
-      description: "Adaptive layer ensuring system continuously improves through feedback-driven machine learning."
+      description: "Executes optimization decisions by applying configuration changes, measures outcomes, and feeds results back to improve ML models and rules."
     }
   ];
 
@@ -80,7 +80,7 @@ const Architecture = () => {
         <div className="text-center mb-12">
           <h1 className="text-5xl font-bold mb-4">System Architecture</h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Comprehensive five-layer architecture demonstrating the flow from data collection through AI processing to automated network optimization
+            Five-layer architecture integrating Machine Learning, Fuzzy Logic, and Expert Systems for intelligent network optimization at Adrian Kenya Limited
           </p>
         </div>
 
@@ -130,9 +130,9 @@ const Architecture = () => {
           <CardContent>
             <div className="grid md:grid-cols-3 gap-6">
               {[
-                { title: "Predictive Fault Detection", desc: "Reduce downtime through early issue identification" },
-                { title: "Intelligent Optimization", desc: "Automated bandwidth and routing improvements" },
-                { title: "Enhanced Scalability", desc: "Adaptive system growing with network demands" }
+                { title: "ML-Powered Prediction", desc: "Advanced forecasting of traffic patterns and anomalies" },
+                { title: "Fuzzy Logic Reasoning", desc: "Handles uncertainty in network state interpretation" },
+                { title: "Expert System Automation", desc: "Rule-based automated responses and escalation" }
               ].map((benefit, idx) => (
                 <div key={idx} className="text-center p-4">
                   <h3 className="font-bold text-lg mb-2">{benefit.title}</h3>

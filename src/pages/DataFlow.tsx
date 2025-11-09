@@ -6,61 +6,97 @@ const DataFlow = () => {
   const flowSteps = [
     {
       icon: Database,
-      title: "Data Ingestion",
-      description: "Network devices continuously generate and transmit performance metrics",
+      title: "Network Data Sources",
+      description: "Multiple data collection points across Adrian Kenya Limited infrastructure",
       details: [
-        "SNMP polling from routers and switches",
-        "Real-time bandwidth and latency measurements",
-        "IoT sensor readings from infrastructure",
-        "System logs and event data collection",
+        "SNMP protocol data from network devices",
+        "NetFlow traffic analysis records",
+        "System logs and event monitoring",
+        "Device telemetry and performance metrics",
       ],
       color: "from-primary to-primary-glow"
     },
     {
-      icon: Cpu,
-      title: "AI Analysis",
-      description: "Machine learning models process and analyze incoming data streams",
+      icon: RefreshCcw,
+      title: "Data Collection & Preprocessing",
+      description: "Raw network data is collected, normalized, and prepared for analysis",
       details: [
-        "Pattern recognition across historical data",
+        "Data ingestion from multiple sources",
+        "Normalization and cleaning processes",
+        "Feature extraction and transformation",
+        "Storage in time-series databases",
+      ],
+      color: "from-secondary to-primary"
+    },
+    {
+      icon: Cpu,
+      title: "Machine Learning Processing",
+      description: "ML models perform training and inference for predictions and anomaly detection",
+      details: [
+        "Traffic prediction using historical patterns",
         "Anomaly detection algorithms",
-        "Predictive modeling for future states",
-        "Optimization algorithm execution",
+        "Network behavior forecasting",
+        "Pattern recognition and classification",
+      ],
+      color: "from-accent to-secondary"
+    },
+    {
+      icon: Zap,
+      title: "Fuzzy Logic Interpretation",
+      description: "Fuzzy rules interpret ML results and assess current network state",
+      details: [
+        "Fuzzy rule evaluation on predictions",
+        "Linguistic variable mapping",
+        "Uncertainty and ambiguity handling",
+        "Network state classification",
+      ],
+      color: "from-warning to-accent"
+    },
+    {
+      icon: Eye,
+      title: "Expert System Decision",
+      description: "Rule-based system determines automated actions and escalation procedures",
+      details: [
+        "If-then rule engine execution",
+        "Automated action recommendations",
+        "Escalation protocol triggering",
+        "Policy-based decision making",
+      ],
+      color: "from-destructive to-warning"
+    },
+    {
+      icon: Database,
+      title: "Network Control & Policy",
+      description: "Configuration changes and optimizations are applied to network devices",
+      details: [
+        "Traffic rerouting implementation",
+        "QoS parameter adjustments",
+        "Resource allocation updates",
+        "Configuration deployment",
+      ],
+      color: "from-primary to-destructive"
+    },
+    {
+      icon: RefreshCcw,
+      title: "Monitoring & Feedback",
+      description: "System measures outcomes and updates models for continuous improvement",
+      details: [
+        "Performance outcome measurement",
+        "Effectiveness validation",
+        "Model retraining with new data",
+        "Rule refinement and optimization",
       ],
       color: "from-secondary to-primary"
     },
     {
       icon: Zap,
-      title: "Decision Making",
-      description: "AI generates optimization recommendations and control commands",
+      title: "Optimized Network",
+      description: "Final state: improved network performance and reliability",
       details: [
-        "Route optimization calculations",
-        "Load balancing strategies",
-        "Bandwidth reallocation plans",
-        "Failure mitigation actions",
-      ],
-      color: "from-accent to-success"
-    },
-    {
-      icon: Eye,
-      title: "Visualization",
-      description: "Results displayed on interactive dashboards for monitoring",
-      details: [
-        "Real-time topology updates",
-        "KPI metric visualization",
-        "Alert notifications",
-        "Performance trend analysis",
-      ],
-      color: "from-warning to-destructive"
-    },
-    {
-      icon: RefreshCcw,
-      title: "Feedback Loop",
-      description: "System outcomes feed back to refine AI models and improve accuracy",
-      details: [
-        "Performance validation",
-        "Model retraining with new data",
-        "Accuracy improvement tracking",
-        "Continuous learning cycle",
+        "Reduced latency across connections",
+        "Higher throughput efficiency",
+        "Decreased fault occurrences",
+        "Enhanced overall reliability",
       ],
       color: "from-primary to-accent"
     }
@@ -74,7 +110,7 @@ const DataFlow = () => {
         <div className="text-center mb-12">
           <h1 className="text-5xl font-bold mb-4">Data Flow Diagram</h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Comprehensive visualization of how data moves through the AI-based network optimization system, from collection to continuous improvement
+            Complete data flow showing integration of Machine Learning, Fuzzy Logic, and Expert Systems for intelligent network optimization
           </p>
         </div>
 
@@ -124,10 +160,10 @@ const DataFlow = () => {
 
         <Card className="mt-12 bg-gradient-to-br from-primary/20 to-secondary/20 border-primary/30 glow-primary max-w-5xl mx-auto">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl">Continuous Improvement Cycle</CardTitle>
+            <CardTitle className="text-2xl">Intelligent Integration Flow</CardTitle>
             <CardDescription className="text-base">
-              The system operates in a perpetual feedback loop, where each network event contributes to refining AI models, 
-              improving prediction accuracy, and enhancing optimization strategies over time.
+              This system uniquely combines Machine Learning for prediction, Fuzzy Logic for uncertainty handling, and Expert Systems for automated decision-making,
+              creating a robust and adaptive network optimization solution for Adrian Kenya Limited.
             </CardDescription>
           </CardHeader>
         </Card>
