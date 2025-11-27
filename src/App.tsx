@@ -9,6 +9,7 @@ import DataFlow from "./pages/DataFlow";
 import ConceptualFramework from "./pages/ConceptualFramework";
 import Dashboard from "./pages/Dashboard";
 import NetworkTopology from "./pages/NetworkTopology";
+import AnomalyDashboard from "./pages/AnomalyDashboard";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 
@@ -27,6 +28,7 @@ const App = () => (
             <Route path="/framework" element={<ConceptualFramework />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/topology" element={<NetworkTopology />} />
+            <Route path="/anomaly" element={<AnomalyDashboard />} />
             <Route path="/about" element={<About />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

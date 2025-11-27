@@ -12,6 +12,7 @@ const Navbar = () => {
     { path: "/framework", label: "Framework" },
     { path: "/dashboard", label: "Live Dashboard" },
     { path: "/topology", label: "Network Map" },
+    { path: "/anomaly", label: "ML Anomaly Detection" },
     { path: "/about", label: "About" },
   ];
 
