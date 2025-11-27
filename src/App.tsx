@@ -8,6 +8,7 @@ import Architecture from "./pages/Architecture";
 import DataFlow from "./pages/DataFlow";
 import ConceptualFramework from "./pages/ConceptualFramework";
 import Dashboard from "./pages/Dashboard";
+import NetworkTopology from "./pages/NetworkTopology";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 
@@ -25,6 +26,7 @@ const App = () => (
             <Route path="/dataflow" element={<DataFlow />} />
             <Route path="/framework" element={<ConceptualFramework />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/topology" element={<NetworkTopology />} />
             <Route path="/about" element={<About />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
