@@ -11,6 +11,7 @@ const Navbar = () => {
     { path: "/dataflow", label: "Data Flow" },
     { path: "/framework", label: "Framework" },
     { path: "/dashboard", label: "Live Dashboard" },
+    { path: "/topology", label: "Network Map" },
     { path: "/about", label: "About" },
   ];
 
