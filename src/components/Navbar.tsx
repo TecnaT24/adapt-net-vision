@@ -14,6 +14,7 @@ const Navbar = () => {
     { path: "/topology", label: "Network Map" },
     { path: "/anomaly", label: "ML Anomaly Detection" },
     { path: "/fuzzy", label: "Fuzzy Logic" },
+    { path: "/expert", label: "Expert System" },
     { path: "/about", label: "About" },
   ];
 
