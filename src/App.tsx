@@ -10,6 +10,7 @@ import ConceptualFramework from "./pages/ConceptualFramework";
 import Dashboard from "./pages/Dashboard";
 import NetworkTopology from "./pages/NetworkTopology";
 import AnomalyDashboard from "./pages/AnomalyDashboard";
+import FuzzyLogicEngine from "./pages/FuzzyLogicEngine";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 
@@ -29,6 +30,7 @@ const App = () => (
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/topology" element={<NetworkTopology />} />
             <Route path="/anomaly" element={<AnomalyDashboard />} />
+            <Route path="/fuzzy" element={<FuzzyLogicEngine />} />
             <Route path="/about" element={<About />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
