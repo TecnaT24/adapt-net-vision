@@ -13,6 +13,7 @@ const Navbar = () => {
     { path: "/dashboard", label: "Live Dashboard" },
     { path: "/topology", label: "Network Map" },
     { path: "/anomaly", label: "ML Anomaly Detection" },
+    { path: "/fuzzy", label: "Fuzzy Logic" },
     { path: "/about", label: "About" },
   ];
 
