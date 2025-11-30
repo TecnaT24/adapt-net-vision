@@ -12,6 +12,8 @@ import NetworkTopology from "./pages/NetworkTopology";
 import AnomalyDashboard from "./pages/AnomalyDashboard";
 import FuzzyLogicEngine from "./pages/FuzzyLogicEngine";
 import ExpertSystem from "./pages/ExpertSystem";
+import AlertSystem from "./pages/AlertSystem";
+import TrafficClassifier from "./pages/TrafficClassifier";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 
@@ -33,6 +35,8 @@ const App = () => (
             <Route path="/anomaly" element={<AnomalyDashboard />} />
             <Route path="/fuzzy" element={<FuzzyLogicEngine />} />
             <Route path="/expert" element={<ExpertSystem />} />
+            <Route path="/alerts" element={<AlertSystem />} />
+            <Route path="/traffic" element={<TrafficClassifier />} />
             <Route path="/about" element={<About />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
