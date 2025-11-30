@@ -14,6 +14,8 @@ import {
   type Fact,
   type Rule,
 } from '@/lib/expertSystem';
+import { alertSystem } from '@/lib/alertSystem';
+import { toast } from '@/hooks/use-toast';
 import {
   Brain,
   Database,
@@ -44,6 +46,26 @@ const ExpertSystem = () => {
       engine.addFacts(newFacts);
       const result = engine.infer();
       setDiagnosis(result);
+
+      // Check alert thresholds based on facts
+      const metricsFromFacts: any = {};
+      newFacts.forEach(fact => {
+        if (fact.id === 'latency') metricsFromFacts.latency = fact.value;
+        if (fact.id === 'cpuUsage') metricsFromFacts.cpuUsage = fact.value;
+        if (fact.id === 'bandwidth') metricsFromFacts.bandwidth = fact.value;
+        if (fact.id === 'packetLoss') metricsFromFacts.packetLoss = fact.value;
+        if (fact.id === 'traffic') metricsFromFacts.traffic = fact.value;
+      });
+
+      const alerts = alertSystem.checkThresholds(metricsFromFacts, 'expert');
+      alerts.forEach(alert => {
+        toast({
+          title: alert.title,
+          description: alert.message,
+          variant: alert.severity === 'critical' || alert.severity === 'high' ? 'destructive' : 'default',
+        });
+      });
+
       setIsAnalyzing(false);
     }, 1000);
   };

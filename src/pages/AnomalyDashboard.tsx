@@ -16,6 +16,8 @@ import {
   XCircle
 } from "lucide-react";
 import { anomalyDetector, Anomaly, NetworkMetrics } from "@/lib/anomalyDetection";
+import { alertSystem } from "@/lib/alertSystem";
+import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
 const AnomalyDashboard = () => {
@@ -94,6 +96,16 @@ const AnomalyDashboard = () => {
         // Detect anomalies
         const detected = anomalyDetector.detectAnomalies(device.id, device.name, metrics);
         newAnomalies.push(...detected);
+
+        // Check alert thresholds
+        const alerts = alertSystem.checkThresholds(metrics, 'anomaly');
+        alerts.forEach(alert => {
+          toast({
+            title: alert.title,
+            description: alert.message,
+            variant: alert.severity === 'critical' || alert.severity === 'high' ? 'destructive' : 'default',
+          });
+        });
       });
 
       setDeviceMetrics(newMetrics);

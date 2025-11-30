@@ -6,6 +6,8 @@ import { Progress } from '@/components/ui/progress';
 import { Slider } from '@/components/ui/slider';
 import Navbar from '@/components/Navbar';
 import { analyzeFuzzyLogic, generateSampleNetworkData, type FuzzyInput, type FuzzyOutput } from '@/lib/fuzzyLogic';
+import { alertSystem } from '@/lib/alertSystem';
+import { toast } from '@/hooks/use-toast';
 import { Brain, Zap, RefreshCw, Activity } from 'lucide-react';
 
 const FuzzyLogicEngine = () => {
@@ -16,6 +18,16 @@ const FuzzyLogicEngine = () => {
   useEffect(() => {
     const newAnalysis = analyzeFuzzyLogic(networkData);
     setAnalysis(newAnalysis);
+
+    // Check alert thresholds
+    const alerts = alertSystem.checkThresholds(networkData, 'fuzzy');
+    alerts.forEach(alert => {
+      toast({
+        title: alert.title,
+        description: alert.message,
+        variant: alert.severity === 'critical' || alert.severity === 'high' ? 'destructive' : 'default',
+      });
+    });
   }, [networkData]);
 
   useEffect(() => {
