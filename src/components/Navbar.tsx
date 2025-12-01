@@ -17,6 +17,8 @@ const Navbar = () => {
     { path: "/expert", label: "Expert System" },
     { path: "/alerts", label: "Alert System" },
     { path: "/traffic", label: "Traffic Classifier" },
+    { path: "/predictive", label: "Predictive Faults" },
+    { path: "/security", label: "Security & Firewall" },
     { path: "/about", label: "About" },
   ];
 
