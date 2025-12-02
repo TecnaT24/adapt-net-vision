@@ -14,7 +14,69 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      incidents: {
+        Row: {
+          acknowledged_at: string | null
+          confidence: number | null
+          created_at: string
+          description: string
+          details: Json
+          device_id: string | null
+          device_name: string | null
+          id: string
+          incident_type: Database["public"]["Enums"]["incident_type"]
+          ip_address: string | null
+          metrics: Json | null
+          recommendations: string[] | null
+          resolved_at: string | null
+          severity: Database["public"]["Enums"]["incident_severity"]
+          source: string
+          status: Database["public"]["Enums"]["incident_status"]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          acknowledged_at?: string | null
+          confidence?: number | null
+          created_at?: string
+          description: string
+          details?: Json
+          device_id?: string | null
+          device_name?: string | null
+          id?: string
+          incident_type: Database["public"]["Enums"]["incident_type"]
+          ip_address?: string | null
+          metrics?: Json | null
+          recommendations?: string[] | null
+          resolved_at?: string | null
+          severity: Database["public"]["Enums"]["incident_severity"]
+          source: string
+          status?: Database["public"]["Enums"]["incident_status"]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          acknowledged_at?: string | null
+          confidence?: number | null
+          created_at?: string
+          description?: string
+          details?: Json
+          device_id?: string | null
+          device_name?: string | null
+          id?: string
+          incident_type?: Database["public"]["Enums"]["incident_type"]
+          ip_address?: string | null
+          metrics?: Json | null
+          recommendations?: string[] | null
+          resolved_at?: string | null
+          severity?: Database["public"]["Enums"]["incident_severity"]
+          source?: string
+          status?: Database["public"]["Enums"]["incident_status"]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +85,14 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      incident_severity: "critical" | "high" | "medium" | "low" | "info"
+      incident_status: "active" | "acknowledged" | "resolved" | "false_positive"
+      incident_type:
+        | "security_threat"
+        | "anomaly"
+        | "predictive_fault"
+        | "alert"
+        | "remediation_action"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +219,16 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      incident_severity: ["critical", "high", "medium", "low", "info"],
+      incident_status: ["active", "acknowledged", "resolved", "false_positive"],
+      incident_type: [
+        "security_threat",
+        "anomaly",
+        "predictive_fault",
+        "alert",
+        "remediation_action",
+      ],
+    },
   },
 } as const
