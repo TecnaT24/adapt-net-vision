@@ -19,6 +19,7 @@ const Navbar = () => {
     { path: "/traffic", label: "Traffic Classifier" },
     { path: "/predictive", label: "Predictive Faults" },
     { path: "/security", label: "Security & Firewall" },
+    { path: "/remediation", label: "Auto Remediation" },
     { path: "/about", label: "About" },
   ];
 
