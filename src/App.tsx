@@ -16,6 +16,7 @@ import AlertSystem from "./pages/AlertSystem";
 import TrafficClassifier from "./pages/TrafficClassifier";
 import PredictiveFaultDetection from "./pages/PredictiveFaultDetection";
 import SecuritySystem from "./pages/SecuritySystem";
+import AutomatedRemediation from "./pages/AutomatedRemediation";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 
@@ -41,6 +42,7 @@ const App = () => (
             <Route path="/traffic" element={<TrafficClassifier />} />
             <Route path="/predictive" element={<PredictiveFaultDetection />} />
             <Route path="/security" element={<SecuritySystem />} />
+            <Route path="/remediation" element={<AutomatedRemediation />} />
             <Route path="/about" element={<About />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
