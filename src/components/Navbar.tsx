@@ -20,6 +20,7 @@ const Navbar = () => {
     { path: "/predictive", label: "Predictive Faults" },
     { path: "/security", label: "Security & Firewall" },
     { path: "/remediation", label: "Auto Remediation" },
+    { path: "/reports", label: "Incident Reports" },
     { path: "/about", label: "About" },
   ];
 
