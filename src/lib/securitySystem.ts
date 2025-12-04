@@ -1,6 +1,7 @@
 import { alertSystem } from './alertSystem';
+import { incidentService } from './incidentService';
 
-export type ThreatType = 
+export type ThreatType =
   | 'ddos' 
   | 'sql_injection' 
   | 'xss' 
@@ -258,8 +259,39 @@ class SecuritySystemManager {
       this.neutralizeThreat(threat.id);
     }
 
+    // Log to incident database
+    incidentService.logSecurityThreat({
+      type: threat.type.replace('_', ' ').toUpperCase(),
+      severity: threat.severity,
+      source: threat.sourceIp,
+      target: threat.targetIp,
+      description: threat.description,
+      confidence: threat.confidence * 100,
+      details: {
+        threatId: threat.id,
+        targetPort: threat.targetPort,
+        attackPattern: threat.attackPattern,
+        status: threat.status,
+        recommendations: this.getRecommendations(type)
+      }
+    }).catch(console.error);
+
     this.notifyListeners();
     return threat;
+  }
+
+  private getRecommendations(type: ThreatType): string[] {
+    const recommendations: Record<ThreatType, string[]> = {
+      ddos: ['Rate limit incoming traffic', 'Enable DDoS protection', 'Contact ISP for upstream filtering'],
+      sql_injection: ['Sanitize all user inputs', 'Use parameterized queries', 'Review database permissions'],
+      xss: ['Implement Content Security Policy', 'Sanitize output encoding', 'Use HttpOnly cookies'],
+      port_scan: ['Close unnecessary ports', 'Implement port knocking', 'Review firewall rules'],
+      brute_force: ['Implement account lockout', 'Enable MFA', 'Use CAPTCHA'],
+      malware: ['Isolate affected systems', 'Run full antivirus scan', 'Update security signatures'],
+      data_exfiltration: ['Block suspicious outbound connections', 'Review data access logs', 'Encrypt sensitive data'],
+      unauthorized_access: ['Rotate credentials', 'Review access controls', 'Enable audit logging']
+    };
+    return recommendations[type] || ['Review security logs', 'Monitor system behavior'];
   }
 
   private calculateThreatConfidence(type: ThreatType, payload: string): number {

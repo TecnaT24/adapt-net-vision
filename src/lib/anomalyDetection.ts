@@ -3,6 +3,8 @@
  * Uses K-means clustering and statistical analysis to detect network anomalies
  */
 
+import { incidentService } from './incidentService';
+
 export interface NetworkMetrics {
   timestamp: number;
   cpu: number;
@@ -317,7 +319,35 @@ export class AnomalyDetector {
     const oneHourAgo = Date.now() - 3600000;
     this.detectedAnomalies = this.detectedAnomalies.filter(a => a.detectedAt > oneHourAgo);
 
+    // Log anomalies to incident database
+    anomalies.forEach(anomaly => {
+      incidentService.logAnomaly({
+        type: anomaly.type,
+        severity: anomaly.severity,
+        deviceId: anomaly.deviceId,
+        deviceName: anomaly.deviceName,
+        description: anomaly.description,
+        confidence: anomaly.confidence,
+        metrics: {
+          ...anomaly.metrics,
+          mlMethod: anomaly.mlMethod
+        },
+        method: `ML: ${anomaly.mlMethod}`
+      }).catch(console.error);
+    });
+
     return anomalies;
+  }
+
+  private getRecommendations(type: Anomaly['type']): string[] {
+    const recommendations: Record<Anomaly['type'], string[]> = {
+      traffic_spike: ['Analyze traffic sources', 'Check for DDoS attack', 'Scale bandwidth if legitimate'],
+      latency_anomaly: ['Check network routes', 'Inspect congested links', 'Review QoS settings'],
+      resource_exhaustion: ['Identify resource-heavy processes', 'Scale resources', 'Implement load balancing'],
+      packet_loss: ['Check physical connections', 'Review network hardware', 'Analyze congestion points'],
+      performance_degradation: ['Run diagnostics', 'Review recent changes', 'Check for hardware issues']
+    };
+    return recommendations[type] || ['Monitor system closely', 'Review recent changes'];
   }
 
   /**

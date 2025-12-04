@@ -1,4 +1,5 @@
 import * as tf from '@tensorflow/tfjs';
+import { incidentService } from './incidentService';
 
 export interface NetworkTimeSeries {
   timestamp: number;
@@ -373,6 +374,17 @@ export class PredictiveFaultDetector {
           };
 
           this.detectedFaults.push(fault);
+
+          // Log to incident database
+          incidentService.logPredictiveFault({
+            deviceId: deviceId,
+            failureType: fault.failureType,
+            predictedTime: new Date(fault.predictedFailureTime),
+            confidence: fault.confidence,
+            severity: fault.severity,
+            affectedMetrics: fault.affectedMetrics,
+            recommendations: fault.recommendation.split('. ').filter(r => r.length > 0)
+          }).catch(console.error);
         }
       }
     }
