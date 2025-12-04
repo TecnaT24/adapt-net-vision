@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FileText, Download, Filter, RefreshCw, Search, AlertTriangle, Shield, Activity, Cpu, Wrench, CheckCircle, XCircle, Clock } from 'lucide-react';
+import { FileText, Download, Filter, RefreshCw, Search, AlertTriangle, Shield, Activity, Cpu, Wrench, CheckCircle, XCircle, Clock, Radio } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -9,12 +9,14 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import { incidentService, type Incident, type IncidentFilters } from '@/lib/incidentService';
+import { supabase } from '@/integrations/supabase/client';
 
 const IncidentReports: React.FC = () => {
   const [incidents, setIncidents] = useState<Incident[]>([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState<IncidentFilters>({});
   const [searchTerm, setSearchTerm] = useState('');
+  const [isLive, setIsLive] = useState(true);
   const [statistics, setStatistics] = useState<{
     total: number;
     byType: Record<string, number>;
@@ -38,6 +40,54 @@ const IncidentReports: React.FC = () => {
   useEffect(() => {
     fetchIncidents();
   }, [filters]);
+
+  // Real-time subscription
+  useEffect(() => {
+    if (!isLive) return;
+
+    const channel = supabase
+      .channel('incidents-realtime')
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'incidents'
+        },
+        (payload) => {
+          console.log('New incident:', payload.new);
+          const newIncident = payload.new as Incident;
+          setIncidents(prev => [newIncident, ...prev]);
+          toast.info(`New incident: ${newIncident.title}`, {
+            description: `${newIncident.severity.toUpperCase()} - ${newIncident.source}`
+          });
+          // Update statistics
+          incidentService.getStatistics().then(setStatistics);
+        }
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'incidents'
+        },
+        (payload) => {
+          console.log('Updated incident:', payload.new);
+          const updatedIncident = payload.new as Incident;
+          setIncidents(prev => 
+            prev.map(inc => inc.id === updatedIncident.id ? updatedIncident : inc)
+          );
+          // Update statistics
+          incidentService.getStatistics().then(setStatistics);
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [isLive]);
 
   const handleExport = () => {
     const csv = incidentService.exportToCSV(incidents);
@@ -116,6 +166,14 @@ const IncidentReports: React.FC = () => {
             </p>
           </div>
           <div className="flex gap-3">
+            <Button
+              onClick={() => setIsLive(!isLive)}
+              variant={isLive ? "default" : "outline"}
+              className={`gap-2 ${isLive ? 'bg-success hover:bg-success/90' : ''}`}
+            >
+              <Radio className={`w-4 h-4 ${isLive ? 'animate-pulse' : ''}`} />
+              {isLive ? 'Live' : 'Paused'}
+            </Button>
             <Button onClick={fetchIncidents} variant="outline" className="gap-2">
               <RefreshCw className="w-4 h-4" />
               Refresh
