@@ -19,6 +19,9 @@ import SecuritySystem from "./pages/SecuritySystem";
 import AutomatedRemediation from "./pages/AutomatedRemediation";
 import IncidentReports from "./pages/IncidentReports";
 import IncidentAnalytics from "./pages/IncidentAnalytics";
+import DemoControl from "./pages/DemoControl";
+import HowItWorks from "./pages/HowItWorks";
+import ResearchObjectives from "./pages/ResearchObjectives";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 
@@ -47,8 +50,10 @@ const App = () => (
             <Route path="/remediation" element={<AutomatedRemediation />} />
             <Route path="/reports" element={<IncidentReports />} />
             <Route path="/analytics" element={<IncidentAnalytics />} />
+            <Route path="/demo" element={<DemoControl />} />
+            <Route path="/how-it-works" element={<HowItWorks />} />
+            <Route path="/research" element={<ResearchObjectives />} />
             <Route path="/about" element={<About />} />
-            <Route path="*" element={<NotFound />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
       </BrowserRouter>

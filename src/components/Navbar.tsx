@@ -7,22 +7,19 @@ const Navbar = () => {
   
   const navItems = [
     { path: "/", label: "Home" },
+    { path: "/how-it-works", label: "How It Works" },
+    { path: "/research", label: "Research" },
     { path: "/architecture", label: "Architecture" },
-    { path: "/dataflow", label: "Data Flow" },
-    { path: "/framework", label: "Framework" },
     { path: "/dashboard", label: "Live Dashboard" },
-    { path: "/topology", label: "Network Map" },
-    { path: "/anomaly", label: "ML Anomaly Detection" },
+    { path: "/anomaly", label: "ML Detection" },
     { path: "/fuzzy", label: "Fuzzy Logic" },
     { path: "/expert", label: "Expert System" },
-    { path: "/alerts", label: "Alert System" },
-    { path: "/traffic", label: "Traffic Classifier" },
-    { path: "/predictive", label: "Predictive Faults" },
-    { path: "/security", label: "Security & Firewall" },
-    { path: "/remediation", label: "Auto Remediation" },
-    { path: "/reports", label: "Incident Reports" },
+    { path: "/predictive", label: "Predictions" },
+    { path: "/security", label: "Security" },
+    { path: "/remediation", label: "Remediation" },
+    { path: "/reports", label: "Reports" },
     { path: "/analytics", label: "Analytics" },
-    { path: "/about", label: "About" },
+    { path: "/demo", label: "Demo Control" },
   ];
 
   return (
