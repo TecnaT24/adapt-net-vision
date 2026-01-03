@@ -7,10 +7,12 @@ const Navbar = () => {
   
   const navItems = [
     { path: "/", label: "Home" },
+    { path: "/about", label: "About" },
     { path: "/how-it-works", label: "How It Works" },
     { path: "/research", label: "Research" },
     { path: "/architecture", label: "Architecture" },
-    { path: "/dashboard", label: "Live Dashboard" },
+    { path: "/topology", label: "Network Topology" },
+    { path: "/dashboard", label: "Dashboard" },
     { path: "/anomaly", label: "ML Detection" },
     { path: "/fuzzy", label: "Fuzzy Logic" },
     { path: "/expert", label: "Expert System" },
