@@ -34,16 +34,33 @@ const PredictiveFaultDetection = () => {
     totalPredictions: 0,
     detectedFaults: 0,
     bySeverity: { critical: 0, high: 0, medium: 0, low: 0 },
-    averageConfidence: 0
+    averageConfidence: 0,
   });
   const [isMonitoring, setIsMonitoring] = useState(false);
   const [selectedHorizon, setSelectedHorizon] = useState<number>(15);
+  const [isInitializing, setIsInitializing] = useState(false);
+  const [isReady, setIsReady] = useState(false);
+
+  const ensureReady = async () => {
+    if (isReady || isInitializing) return;
+    setIsInitializing(true);
+    try {
+      await predictiveFaultDetector.initialize();
+      setIsReady(true);
+    } catch (e) {
+      console.error(e);
+      toast.error("Failed to initialize predictions", {
+        description: "Please refresh and try again.",
+      });
+    } finally {
+      setIsInitializing(false);
+    }
+  };
 
   useEffect(() => {
-    // Initialize the predictor
-    predictiveFaultDetector.initialize().then(() => {
-      console.log('Predictive fault detector initialized');
-    });
+    // Initialize in the background so the page renders fast.
+    void ensureReady();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -153,9 +170,17 @@ const PredictiveFaultDetection = () => {
             </p>
           </div>
           <Button
-            onClick={() => setIsMonitoring(!isMonitoring)}
-            variant={isMonitoring ? 'destructive' : 'default'}
+            onClick={async () => {
+              if (!isMonitoring) {
+                await ensureReady();
+                setIsMonitoring(true);
+              } else {
+                setIsMonitoring(false);
+              }
+            }}
+            variant={isMonitoring ? "destructive" : "default"}
             className="gap-2"
+            disabled={isInitializing}
           >
             {isMonitoring ? (
               <>
@@ -165,7 +190,7 @@ const PredictiveFaultDetection = () => {
             ) : (
               <>
                 <TrendingUp className="h-4 w-4" />
-                Start Monitoring
+                {isInitializing ? "Starting…" : "Start Monitoring"}
               </>
             )}
           </Button>
@@ -231,7 +256,26 @@ const PredictiveFaultDetection = () => {
           </TabsList>
 
           <TabsContent value="faults" className="space-y-4">
-            {faults.length === 0 ? (
+            {!isMonitoring ? (
+              <Card>
+                <CardContent className="flex flex-col items-center justify-center py-12">
+                  <TrendingUp className="h-16 w-16 text-primary mb-4" />
+                  <p className="text-xl font-semibold mb-2">Monitoring is paused</p>
+                  <p className="text-muted-foreground text-center max-w-md mb-4">
+                    Start monitoring to generate predictions and detect potential faults.
+                  </p>
+                  <Button
+                    onClick={async () => {
+                      await ensureReady();
+                      setIsMonitoring(true);
+                    }}
+                    disabled={isInitializing}
+                  >
+                    {isInitializing ? "Starting…" : "Start Monitoring"}
+                  </Button>
+                </CardContent>
+              </Card>
+            ) : faults.length === 0 ? (
               <Card>
                 <CardContent className="flex flex-col items-center justify-center py-12">
                   <CheckCircle className="h-16 w-16 text-green-500 mb-4" />
@@ -361,9 +405,22 @@ const PredictiveFaultDetection = () => {
                 </div>
               </CardHeader>
               <CardContent>
-                {filteredPredictions.length === 0 ? (
+                {!isMonitoring ? (
+                  <div className="text-center py-10 space-y-3">
+                    <p className="text-muted-foreground">Start monitoring to generate predictions.</p>
+                    <Button
+                      onClick={async () => {
+                        await ensureReady();
+                        setIsMonitoring(true);
+                      }}
+                      disabled={isInitializing}
+                    >
+                      {isInitializing ? "Starting…" : "Start Monitoring"}
+                    </Button>
+                  </div>
+                ) : filteredPredictions.length === 0 ? (
                   <div className="text-center py-8 text-muted-foreground">
-                    No predictions available for this time horizon
+                    Generating predictions…
                   </div>
                 ) : (
                   <div className="space-y-4">
