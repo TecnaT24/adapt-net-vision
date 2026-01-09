@@ -50,8 +50,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     // Fetch role using the database function
-    const { data: roleData } = await supabase
-      .rpc('get_user_role' as any, { _user_id: userId });
+    const { data: roleData } = await (supabase.rpc as any)('get_user_role', { _user_id: userId });
     
     if (roleData) {
       setRole(roleData as AppRole);
