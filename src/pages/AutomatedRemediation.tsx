@@ -9,8 +9,9 @@ import { Label } from '@/components/ui/label';
 import { 
   Shield, Zap, PlayCircle, CheckCircle, XCircle, Clock, 
   AlertTriangle, RotateCcw, Activity, Settings, TrendingUp,
-  Server, Trash2, Ban, RefreshCw, Database, Network, Cog
+  Server, Trash2, Ban, RefreshCw, Database, Network, Cog, Ticket
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { 
   remediationSystem, 
   RemediationAction, 
@@ -121,12 +122,20 @@ export default function AutomatedRemediation() {
               Intelligent automated responses to network issues and security threats
             </p>
           </div>
-          <Button 
-            variant="outline"
-            onClick={() => remediationSystem.clearHistory()}
-          >
-            Clear History
-          </Button>
+          <div className="flex gap-2">
+            <Button asChild>
+              <Link to="/itsm">
+                <Ticket className="h-4 w-4 mr-2" />
+                ITSM Portal
+              </Link>
+            </Button>
+            <Button 
+              variant="outline"
+              onClick={() => remediationSystem.clearHistory()}
+            >
+              Clear History
+            </Button>
+          </div>
         </div>
 
         {/* Statistics */}
