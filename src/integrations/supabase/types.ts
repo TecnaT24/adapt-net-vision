@@ -77,6 +77,48 @@ export type Database = {
         }
         Relationships: []
       }
+      knowledge_articles: {
+        Row: {
+          author_id: string | null
+          content: string
+          created_at: string
+          helpful_count: number | null
+          id: string
+          incident_types: string[] | null
+          summary: string | null
+          tags: string[] | null
+          title: string
+          updated_at: string
+          views: number | null
+        }
+        Insert: {
+          author_id?: string | null
+          content: string
+          created_at?: string
+          helpful_count?: number | null
+          id?: string
+          incident_types?: string[] | null
+          summary?: string | null
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+          views?: number | null
+        }
+        Update: {
+          author_id?: string | null
+          content?: string
+          created_at?: string
+          helpful_count?: number | null
+          id?: string
+          incident_types?: string[] | null
+          summary?: string | null
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+          views?: number | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
