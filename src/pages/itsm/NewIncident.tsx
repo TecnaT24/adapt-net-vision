@@ -78,15 +78,15 @@ export default function NewIncident() {
         description: formData.description.trim(),
         severity: formData.severity as 'critical' | 'high' | 'medium' | 'low',
         status: 'active',
-        incident_type: 'anomaly',
+        incident_type: 'alert' as const,
         source: 'ITSM Portal',
-        category: formData.category || null,
-        contact_email: formData.contactEmail || null,
-        contact_phone: formData.contactPhone || null,
-        reported_by: user?.id,
-        priority: formData.severity,
-        sla_due_at: slaDueAt.toISOString(),
-        details: {},
+        details: {
+          category: formData.category || null,
+          contact_email: formData.contactEmail || null,
+          contact_phone: formData.contactPhone || null,
+          reported_by: user?.id,
+          sla_due_at: slaDueAt.toISOString(),
+        },
       })
       .select()
       .single();
