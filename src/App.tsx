@@ -31,6 +31,7 @@ import IncidentList from "./pages/itsm/IncidentList";
 import NewIncident from "./pages/itsm/NewIncident";
 import IncidentDetail from "./pages/itsm/IncidentDetail";
 import KnowledgeBase from "./pages/itsm/KnowledgeBase";
+import Changes from "./pages/itsm/Changes";
 
 const queryClient = new QueryClient();
 
@@ -68,6 +69,7 @@ const App = () => (
               <Route path="/itsm/incidents/new" element={<NewIncident />} />
               <Route path="/itsm/incidents/:id" element={<IncidentDetail />} />
               <Route path="/itsm/knowledge" element={<KnowledgeBase />} />
+              <Route path="/itsm/changes" element={<Changes />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
         </BrowserRouter>
