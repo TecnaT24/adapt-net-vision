@@ -38,22 +38,34 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchUserData = async (userId: string) => {
-    // Fetch profile - using raw query since types may not be synced
-    const { data: profileData } = await supabase
-      .from('profiles' as any)
-      .select('*')
-      .eq('user_id', userId)
-      .maybeSingle();
-    
-    if (profileData) {
-      setProfile(profileData as unknown as Profile);
-    }
+    try {
+      // Fetch profile
+      const { data: profileData, error: profileError } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('user_id', userId)
+        .maybeSingle();
+      
+      if (profileError) {
+        console.error('Error fetching profile:', profileError);
+      } else if (profileData) {
+        setProfile(profileData as Profile);
+      }
 
-    // Fetch role using the database function
-    const { data: roleData } = await (supabase.rpc as any)('get_user_role', { _user_id: userId });
-    
-    if (roleData) {
-      setRole(roleData as AppRole);
+      // Fetch role using the database function
+      const { data: roleData, error: roleError } = await supabase.rpc('get_user_role', { _user_id: userId });
+      
+      if (roleError) {
+        console.error('Error fetching role:', roleError);
+        setRole('employee'); // Default to employee if role fetch fails
+      } else if (roleData) {
+        setRole(roleData as AppRole);
+      } else {
+        setRole('employee'); // Default to employee if no role found
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      setRole('employee'); // Default to employee on error
     }
   };
 
