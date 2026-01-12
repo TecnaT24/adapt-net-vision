@@ -14,6 +14,41 @@ export type Database = {
   }
   public: {
     Tables: {
+      incident_comments: {
+        Row: {
+          comment: string
+          created_at: string
+          id: string
+          incident_id: string
+          is_internal: boolean
+          user_id: string
+        }
+        Insert: {
+          comment: string
+          created_at?: string
+          id?: string
+          incident_id: string
+          is_internal?: boolean
+          user_id: string
+        }
+        Update: {
+          comment?: string
+          created_at?: string
+          id?: string
+          incident_id?: string
+          is_internal?: boolean
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "incident_comments_incident_id_fkey"
+            columns: ["incident_id"]
+            isOneToOne: false
+            referencedRelation: "incidents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       incidents: {
         Row: {
           acknowledged_at: string | null
