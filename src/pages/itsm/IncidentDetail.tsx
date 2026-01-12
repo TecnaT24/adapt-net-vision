@@ -404,7 +404,7 @@ export default function IncidentDetail() {
                               {format(new Date(comment.created_at), 'MMM d, HH:mm')}
                             </span>
                           </div>
-                          {user?.id === comment.user_id && editingCommentId !== comment.id && (
+                          {(user?.id === comment.user_id || isITSupport || isAdmin) && editingCommentId !== comment.id && (
                             <div className="flex items-center gap-1">
                               <Button
                                 variant="ghost"
