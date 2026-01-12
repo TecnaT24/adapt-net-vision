@@ -22,7 +22,10 @@ import {
   Loader2,
   Edit,
   CheckCircle,
-  Timer
+  Timer,
+  Trash2,
+  X,
+  Check
 } from 'lucide-react';
 
 interface Incident {
@@ -83,6 +86,8 @@ export default function IncidentDetail() {
   const [isInternal, setIsInternal] = useState(false);
   const [isSubmittingComment, setIsSubmittingComment] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
+  const [editingCommentText, setEditingCommentText] = useState('');
 
   useEffect(() => {
     const fetchIncident = async () => {
@@ -177,6 +182,50 @@ export default function IncidentDetail() {
     } else {
       setNewComment('');
       toast.success('Comment added');
+    }
+  };
+
+  const handleEditComment = (comment: Comment) => {
+    setEditingCommentId(comment.id);
+    setEditingCommentText(comment.comment);
+  };
+
+  const handleCancelEdit = () => {
+    setEditingCommentId(null);
+    setEditingCommentText('');
+  };
+
+  const handleSaveEdit = async () => {
+    if (!editingCommentId || !editingCommentText.trim()) return;
+    
+    const { error } = await supabase
+      .from('incident_comments' as any)
+      .update({ comment: editingCommentText.trim() } as any)
+      .eq('id', editingCommentId);
+    
+    if (error) {
+      toast.error('Failed to update comment');
+    } else {
+      setComments(comments.map(c => 
+        c.id === editingCommentId ? { ...c, comment: editingCommentText.trim() } : c
+      ));
+      setEditingCommentId(null);
+      setEditingCommentText('');
+      toast.success('Comment updated');
+    }
+  };
+
+  const handleDeleteComment = async (commentId: string) => {
+    const { error } = await supabase
+      .from('incident_comments' as any)
+      .delete()
+      .eq('id', commentId);
+    
+    if (error) {
+      toast.error('Failed to delete comment');
+    } else {
+      setComments(comments.filter(c => c.id !== commentId));
+      toast.success('Comment deleted');
     }
   };
 
@@ -335,7 +384,7 @@ export default function IncidentDetail() {
               ) : (
                 <div className="space-y-4">
                   {comments.map((comment) => (
-                    <div key={comment.id} className={`flex gap-3 ${comment.is_internal ? 'bg-muted/50 p-3 rounded-lg' : ''}`}>
+                    <div key={comment.id} className={`flex gap-3 ${comment.is_internal ? 'bg-muted/50 p-3 rounded-lg' : 'p-3'}`}>
                       <Avatar className="h-8 w-8">
                         <AvatarImage src={comment.profile?.avatar_url || undefined} />
                         <AvatarFallback>
@@ -343,18 +392,61 @@ export default function IncidentDetail() {
                         </AvatarFallback>
                       </Avatar>
                       <div className="flex-1">
-                        <div className="flex items-center gap-2">
-                          <span className="font-medium text-sm">
-                            {comment.profile?.full_name || 'Unknown User'}
-                          </span>
-                          {comment.is_internal && (
-                            <Badge variant="outline" className="text-xs">Internal</Badge>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <span className="font-medium text-sm">
+                              {comment.profile?.full_name || 'Unknown User'}
+                            </span>
+                            {comment.is_internal && (
+                              <Badge variant="outline" className="text-xs">Internal</Badge>
+                            )}
+                            <span className="text-xs text-muted-foreground">
+                              {format(new Date(comment.created_at), 'MMM d, HH:mm')}
+                            </span>
+                          </div>
+                          {user?.id === comment.user_id && editingCommentId !== comment.id && (
+                            <div className="flex items-center gap-1">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-7 w-7"
+                                onClick={() => handleEditComment(comment)}
+                              >
+                                <Edit className="h-3.5 w-3.5" />
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-7 w-7 text-destructive hover:text-destructive"
+                                onClick={() => handleDeleteComment(comment.id)}
+                              >
+                                <Trash2 className="h-3.5 w-3.5" />
+                              </Button>
+                            </div>
                           )}
-                          <span className="text-xs text-muted-foreground">
-                            {format(new Date(comment.created_at), 'MMM d, HH:mm')}
-                          </span>
                         </div>
-                        <p className="text-sm mt-1">{comment.comment}</p>
+                        {editingCommentId === comment.id ? (
+                          <div className="mt-2 space-y-2">
+                            <Textarea
+                              value={editingCommentText}
+                              onChange={(e) => setEditingCommentText(e.target.value)}
+                              rows={2}
+                              className="text-sm"
+                            />
+                            <div className="flex gap-2">
+                              <Button size="sm" variant="outline" onClick={handleCancelEdit}>
+                                <X className="h-3.5 w-3.5 mr-1" />
+                                Cancel
+                              </Button>
+                              <Button size="sm" onClick={handleSaveEdit} disabled={!editingCommentText.trim()}>
+                                <Check className="h-3.5 w-3.5 mr-1" />
+                                Save
+                              </Button>
+                            </div>
+                          </div>
+                        ) : (
+                          <p className="text-sm mt-1">{comment.comment}</p>
+                        )}
                       </div>
                     </div>
                   ))}
